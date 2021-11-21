@@ -114,10 +114,10 @@ databaseChangeLog:
             type: BIGINT
         - column:
             name: name
-            type: CHAR(40)
+            type: VARCHAR(40)
         - column:
             name: description
-            type: CHAR(150)
+            type: VARCHAR(150)
         - column:
             name: price
             type: BIGINT
@@ -167,7 +167,7 @@ databaseChangeLog:
             type: BIGINT
         - column:
             name: name
-            type: CHAR(30)
+            type: VARCHAR(30)
         tableName: customer
 - changeSet:
     id: 1636564744548-8

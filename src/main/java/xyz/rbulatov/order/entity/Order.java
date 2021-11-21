@@ -1,4 +1,5 @@
 package xyz.rbulatov.order.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,9 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
-public class Orders {
+public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -24,5 +25,6 @@ public class Orders {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "products_id")
     )
-    private List<Products> products;
+    @JsonIgnore
+    private List<Product> products;
 }

@@ -9,13 +9,13 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
-public class Products {
+public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String description;
     private int price;
     @ManyToMany(mappedBy = "products")
-    private List<Orders> orders;
+    private List<Order> order;
 }
