@@ -6,4 +6,5 @@ import xyz.rbulatov.order.entity.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    Customer findCustomerById(long id);
 }

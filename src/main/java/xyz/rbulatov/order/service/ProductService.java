@@ -2,11 +2,8 @@ package xyz.rbulatov.order.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.rbulatov.order.dto.OrderDTO;
 import xyz.rbulatov.order.dto.ProductDTO;
-import xyz.rbulatov.order.entity.Order;
 import xyz.rbulatov.order.entity.Product;
-import xyz.rbulatov.order.mapper.OrderMapper;
 import xyz.rbulatov.order.mapper.ProductMapper;
 import xyz.rbulatov.order.repository.ProductRepository;
 

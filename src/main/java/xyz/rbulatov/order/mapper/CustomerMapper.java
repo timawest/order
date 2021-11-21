@@ -8,6 +8,5 @@ import xyz.rbulatov.order.entity.Customer;
 @Mapper
 public interface CustomerMapper {
     CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
-
     CustomerDTO fromCustomer(Customer customer);
 }

@@ -2,7 +2,6 @@ package xyz.rbulatov.order.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import xyz.rbulatov.order.dto.CustomerDTO;
 import xyz.rbulatov.order.entity.Customer;
 import xyz.rbulatov.order.mapper.CustomerMapper;
@@ -27,9 +26,18 @@ public class CustomerService {
             customerDTOList.add(CustomerMapper.CUSTOMER_MAPPER.fromCustomer(customer));
             System.out.println(customer.getName());
         }
-       for (CustomerDTO customerDTO: customerDTOList){
+        for (CustomerDTO customerDTO: customerDTOList){
             System.out.println(customerDTO.getName());
         }
         return customerDTOList;
+    }
+
+    public CustomerDTO getCustomerById(Long id) {
+        Customer customer = customerRepository.findCustomerById(id);
+        CustomerDTO customerDTO = CustomerMapper.CUSTOMER_MAPPER.fromCustomer(customer);
+        return customerDTO;
+    }
+    public Customer addCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 }

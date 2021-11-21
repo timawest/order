@@ -1,6 +1,8 @@
 package xyz.rbulatov.order.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import xyz.rbulatov.order.dto.ProductDTO;
+
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,18 +15,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @ManyToOne
-    @JoinColumn(name = "customer_id")
     private Customer customer;
-
     private Timestamp datetime;
-    @ManyToMany
-    @JoinTable(
-            name = "order_to_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "products_id")
-    )
-    @JsonIgnore
-    private List<Product> products;
+    @ManyToMany(mappedBy = "orderList",fetch = FetchType.EAGER)
+    private List<Product> productList;
 }

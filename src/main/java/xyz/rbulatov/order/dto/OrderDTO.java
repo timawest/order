@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 import java.util.List;
 @Data
 public class OrderDTO {
-    private long id;
+    private Long id;
     private Customer customer;
     private Timestamp datetime;
-    private List<ProductDTO> productDTOList;
+    private List<ProductDTO> productList;
 }

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.rbulatov.order.dto.ProductDTO;
-import xyz.rbulatov.order.entity.Order;
-import xyz.rbulatov.order.entity.Product;
 import xyz.rbulatov.order.service.ProductService;
 
 import java.util.List;
