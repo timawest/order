@@ -1,29 +1,51 @@
 package xyz.rbulatov.order.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import xyz.rbulatov.order.dto.CustomerDTO;
 import xyz.rbulatov.order.dto.OrderDTO;
+import xyz.rbulatov.order.entity.Order;
+import xyz.rbulatov.order.mapper.OrderMapper;
 import xyz.rbulatov.order.service.OrderService;
 
-import java.util.List;
+import java.sql.Timestamp;
 
-@Controller
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/orders")
 public class OrderController {
-    private OrderService orderService;
-@Autowired
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+    private final OrderService orderService;
+    private final OrderMapper orderMapper;
 
-    }
-
-
-    @GetMapping("/orders")
+    @GetMapping
     @ResponseBody
-    public List<OrderDTO> findAllOrder() {
-        System.out.println("orderService.getAllOrder()");
-        return orderService.getAllOrder();
+    public ResponseEntity<?> findAllCustomer() {
+        return ResponseEntity.ok(orderMapper.toOrderDTOs(orderService.getAllOrder()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderId(@PathVariable Long id) {
+        return ResponseEntity.ok(orderMapper.toOrderDTO(orderService.getOrderById(id).get()));
+    }
+    @PutMapping("/put/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
+        Order order = orderMapper.toOrder(orderDTO);
+        order.setId(id);
+        order.setDatetime(new Timestamp(System.currentTimeMillis()));
+        orderService.save(order);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(orderDTO);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> create(@RequestBody OrderDTO orderDTO) {
+        orderService.save(orderMapper.toOrder(orderDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderDTO);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteOrder(@PathVariable Long id) {
+        orderService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }

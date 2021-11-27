@@ -9,35 +9,29 @@ import xyz.rbulatov.order.repository.CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
-    public List<CustomerDTO> getAllCustomer() {
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
-        List<Customer> customerList = customerRepository.findAll();
-        for (Customer customer : customerList){
-            customerDTOList.add(CustomerMapper.CUSTOMER_MAPPER.fromCustomer(customer));
-            System.out.println(customer.getName());
-        }
-        for (CustomerDTO customerDTO: customerDTOList){
-            System.out.println(customerDTO.getName());
-        }
-        return customerDTOList;
+    public List<Customer> getAllCustomer() {
+        return customerRepository.findAll();
     }
 
-    public CustomerDTO getCustomerById(Long id) {
-        Customer customer = customerRepository.findCustomerById(id);
-        CustomerDTO customerDTO = CustomerMapper.CUSTOMER_MAPPER.fromCustomer(customer);
-        return customerDTO;
+    public Optional<Customer> getCustomerById(Long id) {
+        return customerRepository.findById(id);
     }
-    public Customer addCustomer(Customer customer) {
+    public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }
+    public void deleteById(Long id) {
+        customerRepository.deleteById(id);
+    }
+
 }

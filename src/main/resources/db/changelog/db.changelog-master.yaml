@@ -215,8 +215,8 @@ databaseChangeLog:
         constraintName: orderss_customer_id_fkey
         deferrable: false
         initiallyDeferred: false
-        onDelete: CASCADE
-        onUpdate: CASCADE
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
         referencedColumnNames: id
         referencedTableName: customer
         validate: true

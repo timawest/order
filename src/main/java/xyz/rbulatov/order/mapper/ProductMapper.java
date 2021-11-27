@@ -1,13 +1,15 @@
 package xyz.rbulatov.order.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import xyz.rbulatov.order.dto.ProductDTO;
 import xyz.rbulatov.order.entity.Product;
+import java.util.List;
 
-@Mapper
+@Mapper(
+        componentModel = "spring"
+)
 public interface ProductMapper {
-    ProductMapper PRODUCT_MAPPER = Mappers.getMapper(ProductMapper.class);
-
-    ProductDTO fromProduct(Product product);
+    ProductDTO toProductDTO(Product product);
+    List<ProductDTO> toProductDTOs(List<Product> products);
+    Product toProduct(ProductDTO productDTO);
 }
