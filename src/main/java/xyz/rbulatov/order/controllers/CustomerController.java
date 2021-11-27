@@ -1,7 +1,7 @@
 package xyz.rbulatov.order.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +14,7 @@ import xyz.rbulatov.order.service.CustomerService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/customers")
+@Tag(name="Пользователи", description="Взаимодествие с пользователями")
 public class CustomerController {
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
