@@ -21,25 +21,22 @@ public class ProductController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<?> findAllProduct() {
+    public ResponseEntity findAllProduct() {
         return ResponseEntity.ok(productMapper.toProductDTOs(productService.getAllProduct()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductId(@PathVariable Long id) {
+    public ResponseEntity getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productMapper.toProductDTO(productService.getProductById(id).get()));
     }
-
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody ProductDTO productDTO) {
-        productService.save(productMapper.toProduct(productDTO));
+    public ResponseEntity create(@RequestBody ProductDTO productDTO) {
+        productService.create(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
     }
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        Product product = productMapper.toProduct(productDTO);
-        product.setId(id);
-        productService.save(product);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        productService.save(productDTO, id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productDTO);
     }
 
