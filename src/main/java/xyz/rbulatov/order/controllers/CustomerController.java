@@ -21,25 +21,23 @@ public class CustomerController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<?> findAllCustomer() {
+    public ResponseEntity findAllCustomer() {
         return ResponseEntity.ok(customerMapper.toCustomerDTOs(customerService.getAllCustomer()));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCustomerId(@PathVariable Long id)
+    public ResponseEntity getCustomerById(@PathVariable Long id)
     {
         return ResponseEntity.ok(customerMapper.toCustomerDTO(customerService.getCustomerById(id).get()));
     }
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody CustomerDTO customerDTO) {
-        customerService.save(customerMapper.toCustomer(customerDTO));
+    public ResponseEntity create(@RequestBody CustomerDTO customerDTO) {
+        customerService.create(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-        Customer customer = customerMapper.toCustomer(customerDTO);
-        customer.setId(id);
-        customerService.save(customer);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+        customerService.save(customerDTO, id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerDTO);
     }
 

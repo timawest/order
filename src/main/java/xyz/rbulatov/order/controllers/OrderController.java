@@ -22,25 +22,22 @@ public class OrderController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<?> findAllCustomer() {
+    public ResponseEntity findAllCustomer() {
         return ResponseEntity.ok(orderMapper.toOrderDTOs(orderService.getAllOrder()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOrderId(@PathVariable Long id) {
+    public ResponseEntity getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderMapper.toOrderDTO(orderService.getOrderById(id).get()));
     }
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
-        Order order = orderMapper.toOrder(orderDTO);
-        order.setId(id);
-        order.setDatetime(new Timestamp(System.currentTimeMillis()));
-        orderService.save(order);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
+        orderService.save(orderDTO, id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(orderDTO);
     }
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody OrderDTO orderDTO) {
-        orderService.save(orderMapper.toOrder(orderDTO));
+    public ResponseEntity create(@RequestBody OrderDTO orderDTO) {
+        orderService.create(orderDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderDTO);
     }
     @DeleteMapping("/delete/{id}")
