@@ -1,4 +1,5 @@
 package xyz.rbulatov.order.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "customer")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Orders> orders;
+    @JsonIgnore
+    private List<Order> orderList;
 }
