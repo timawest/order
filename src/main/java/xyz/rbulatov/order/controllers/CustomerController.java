@@ -1,35 +1,52 @@
 package xyz.rbulatov.order.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xyz.rbulatov.order.dto.CustomerDTO;
 import xyz.rbulatov.order.entity.Customer;
+import xyz.rbulatov.order.mapper.CustomerMapper;
 import xyz.rbulatov.order.service.CustomerService;
 
-import java.util.List;
-@Controller
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/customers")
+@Tag(name="Пользователи", description="Взаимодествие с пользователями")
 public class CustomerController {
-    private CustomerService customerService;
+    private final CustomerService customerService;
+    private final CustomerMapper customerMapper;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping("/customers")
+    @GetMapping
     @ResponseBody
-    public List<CustomerDTO> findAllCustomer() {
-        return customerService.getAllCustomer();
+    public ResponseEntity<?> findAllCustomer() {
+        return ResponseEntity.ok(customerMapper.toCustomerDTOs(customerService.getAllCustomer()));
     }
-    @GetMapping("/customers/{id}")
-    @ResponseBody
-    public CustomerDTO getCustomerId(@PathVariable Long id) {
-        return customerService.getCustomerById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCustomerId(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(customerMapper.toCustomerDTO(customerService.getCustomerById(id).get()));
     }
-    @PostMapping("customers/add")
-    public Customer addCustomer(@RequestBody Customer customer){
-        return customerService.addCustomer(customer);
+    @PostMapping("/add")
+    public ResponseEntity<?> create(@RequestBody CustomerDTO customerDTO) {
+        customerService.save(customerMapper.toCustomer(customerDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
     }
 
+    @PutMapping("/put/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+        Customer customer = customerMapper.toCustomer(customerDTO);
+        customer.setId(id);
+        customerService.save(customer);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerDTO);
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteCustomer(@PathVariable Long id) {
+        customerService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }

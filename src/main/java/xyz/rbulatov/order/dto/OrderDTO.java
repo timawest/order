@@ -12,5 +12,5 @@ public class OrderDTO {
     private Long id;
     private Customer customer;
     private Timestamp datetime;
-    private List<ProductDTO> productList;
+    private List<Product> productList;
 }

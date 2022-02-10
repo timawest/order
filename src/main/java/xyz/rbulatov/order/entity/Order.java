@@ -1,6 +1,10 @@
 package xyz.rbulatov.order.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 import xyz.rbulatov.order.dto.ProductDTO;
 
 
@@ -14,10 +18,20 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @ManyToOne
+    @Column(name = "id")
+    private Long id;
+    @ManyToOne()
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+    @Column(name = "datetime")
+    @CreationTimestamp
     private Timestamp datetime;
-    @ManyToMany(mappedBy = "orderList",fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "order_to_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "products_id")
+    )
+    @JsonIgnore
     private List<Product> productList;
 }

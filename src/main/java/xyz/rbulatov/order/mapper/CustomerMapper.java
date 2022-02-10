@@ -1,12 +1,16 @@
 package xyz.rbulatov.order.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import xyz.rbulatov.order.dto.CustomerDTO;
 import xyz.rbulatov.order.entity.Customer;
 
-@Mapper
+import java.util.List;
+
+@Mapper(
+        componentModel = "spring"
+)
 public interface CustomerMapper {
-    CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
-    CustomerDTO fromCustomer(Customer customer);
+    CustomerDTO toCustomerDTO(Customer customer);
+    List<CustomerDTO> toCustomerDTOs(List<Customer> customers);
+    Customer toCustomer(CustomerDTO customerDTO);
 }
