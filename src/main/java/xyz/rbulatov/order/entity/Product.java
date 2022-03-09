@@ -1,22 +1,21 @@
 package xyz.rbulatov.order.entity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import xyz.rbulatov.order.dto.OrderDTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
-
 
 @Entity
 @Table(name = "products")
 @Data
+@Schema(description = "Сущность товары")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     @Column(name = "name")
     private String name;

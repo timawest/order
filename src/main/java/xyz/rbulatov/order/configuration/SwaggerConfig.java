@@ -14,16 +14,11 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(
                         new Info()
-                                .title("Orders Swagger Api")
+                                .title("Ruslan Swagger Api")
                                 .version("1.0.0")
-                                .contact(
-                                        new Contact()
-                                                .email("tima_west@mail.ru")
-                                                .url("https://tima_west.ru")
-                                                .name("Bulatov Ruslan")
-                                )
+                                .contact(new Contact()
+                                        .name("Ruslan")
+                                        .email("rbulatov@neoflex.ru"))
                 );
     }
-
-
 }

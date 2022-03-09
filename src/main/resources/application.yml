@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/orders
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    maximumPoolSize: 30
+  banner:
+    location: classpath:/banner.txt
+application:
+  title: "Ruslan Application"
+  version: V1.0.0

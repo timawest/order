@@ -1,47 +1,72 @@
 package xyz.rbulatov.order.controllers;
 
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xyz.rbulatov.order.dto.OrderDTO;
 import xyz.rbulatov.order.dto.ProductDTO;
-import xyz.rbulatov.order.entity.Product;
 import xyz.rbulatov.order.mapper.ProductMapper;
 import xyz.rbulatov.order.service.ProductService;
 
+import java.util.List;
 
-
-@RequiredArgsConstructor
+@AllArgsConstructor
 @RestController
 @RequestMapping("/products")
+@Tag(name="Товары", description="Управление товарами")
 public class ProductController {
+
     private final ProductService productService;
     private final ProductMapper productMapper;
 
     @GetMapping
-    @ResponseBody
-    public ResponseEntity findAllProduct() {
+    @Operation(
+            summary = "Отобразить все товары",
+            description = "Позволяет отобразить все товары"
+    )
+    public ResponseEntity<List<ProductDTO>> findAllProduct() {
         return ResponseEntity.ok(productMapper.toProductDTOs(productService.getAllProduct()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getProductById(@PathVariable Long id) {
+    @Operation(
+            summary = "Поиск по ID",
+            description = "Позволяет найти товар по ID"
+    )
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable @Parameter(description = "Идентификатор товара") Long id) {
         return ResponseEntity.ok(productMapper.toProductDTO(productService.getProductById(id).get()));
     }
+
     @PostMapping("/add")
-    public ResponseEntity create(@RequestBody ProductDTO productDTO) {
+    @Operation(
+            summary = "Создать",
+            description = "Позволяет зарегистрировать товар"
+    )
+    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
         productService.create(productDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @PutMapping("/put/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    @Operation(
+            summary = "Изменить",
+            description = "Позволяет изменить товар"
+    )
+
+    public ResponseEntity<ProductDTO> update(@PathVariable @Parameter(description = "Идентификатор товара") Long id, @RequestBody ProductDTO productDTO) {
         productService.save(productDTO, id);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteProduct(@PathVariable Long id) {
+    @Operation(
+            summary = "Удаление",
+            description = "Позволяет удалить товар по ID"
+    )
+    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable @Parameter(description = "Идентификатор товара") Long id) {
         productService.deleteById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }

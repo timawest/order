@@ -1,13 +1,9 @@
 package xyz.rbulatov.order.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
-import xyz.rbulatov.order.dto.ProductDTO;
-
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -15,10 +11,13 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
+@Schema(description = "Сущность заказов")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     @ManyToOne()
     @JoinColumn(name = "customer_id")

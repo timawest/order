@@ -1,47 +1,70 @@
 package xyz.rbulatov.order.controllers;
 
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xyz.rbulatov.order.dto.CustomerDTO;
 import xyz.rbulatov.order.dto.OrderDTO;
-import xyz.rbulatov.order.entity.Order;
 import xyz.rbulatov.order.mapper.OrderMapper;
 import xyz.rbulatov.order.service.OrderService;
 
-import java.sql.Timestamp;
+import java.util.List;
 
-
-@RequiredArgsConstructor
+@AllArgsConstructor
 @RestController
 @RequestMapping("/orders")
+@Tag(name="Заказы", description="Управление заказами")
 public class OrderController {
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
     @GetMapping
-    @ResponseBody
-    public ResponseEntity findAllCustomer() {
+    @Operation(
+            summary = "Отобразить все заказы",
+            description = "Позволяет отобразить все заказы"
+    )
+    public ResponseEntity<List<OrderDTO>> findAllOrder() {
         return ResponseEntity.ok(orderMapper.toOrderDTOs(orderService.getAllOrder()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getOrderById(@PathVariable Long id) {
+    @Operation(
+            summary = "Поиск по ID",
+            description = "Позволяет найти заказ по ID"
+    )
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable @Parameter(description = "Идентификатор заказа") Long id) {
         return ResponseEntity.ok(orderMapper.toOrderDTO(orderService.getOrderById(id).get()));
     }
+
     @PutMapping("/put/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
+    @Operation(
+            summary = "Изменить",
+            description = "Позволяет изменить заказ"
+    )
+    public ResponseEntity<OrderDTO> update(@PathVariable @Parameter(description = "Идентификатор заказа") Long id, @RequestBody OrderDTO orderDTO) {
         orderService.save(orderDTO, id);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(orderDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
     @PostMapping("/add")
-    public ResponseEntity create(@RequestBody OrderDTO orderDTO) {
+    @Operation(
+            summary = "Создать",
+            description = "Позволяет зарегистрировать заказ"
+    )
+    public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO orderDTO) {
         orderService.create(orderDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteOrder(@PathVariable Long id) {
+    @Operation(
+            summary = "Удаление",
+            description = "Позволяет удалить заказ по ID"
+    )
+    public ResponseEntity<OrderDTO> deleteOrder(@PathVariable @Parameter(description = "Идентификатор заказа") Long id) {
         orderService.deleteById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
