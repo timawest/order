@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 public class OrderDTO {
-
     private Long id;
     private Customer customer;
     private Timestamp datetime;

@@ -1,8 +1,8 @@
-package xyz.rbulatov.order.controllers;
+package xyz.rbulatov.order.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/products")
-@Tag(name="Товары", description="Управление товарами")
+@Api("Контроллер по работе с продуктами")
 public class ProductController {
 
     private final ProductService productService;

@@ -1,7 +1,7 @@
 databaseChangeLog:
 - changeSet:
-      id: 1636564744548-1
-      author: Ruslan (generated)
+      id: create_table_orders
+      author: Ruslan
       changes:
           - createTable:
                 columns:
@@ -24,8 +24,8 @@ databaseChangeLog:
                           type: TIMESTAMP WITHOUT TIME ZONE
                 tableName: orders
 - changeSet:
-      id: 1636564744548-2
-      author: Ruslan (generated)
+      id: loadData_table_orders
+      author: Ruslan
       changes:
           - loadData:
                 columns:
@@ -45,8 +45,8 @@ databaseChangeLog:
                 relativeToChangelogFile: true
                 tableName: orders
 - changeSet:
-      id: 1636564744548-3
-      author: Ruslan (generated)
+      id: create_table_order_to_product
+      author: Ruslan
       changes:
           - createTable:
                 columns:
@@ -70,8 +70,8 @@ databaseChangeLog:
                           type: BIGINT
                 tableName: order_to_product
 - changeSet:
-      id: 1636564744548-4
-      author: Ruslan (generated)
+      id: loadData_order_to_product
+      author: Ruslan
       changes:
           - loadData:
                 columns:
@@ -91,8 +91,8 @@ databaseChangeLog:
                 relativeToChangelogFile: true
                 tableName: order_to_product
 - changeSet:
-      id: 1636564744548-5
-      author: Ruslan (generated)
+      id: create_table_products
+      author: Ruslan
       changes:
           - createTable:
                 columns:
@@ -115,8 +115,8 @@ databaseChangeLog:
                           type: BIGINT
                 tableName: products
 - changeSet:
-      id: 1636564744548-6
-      author: Ruslan (generated)
+      id: loadData_products
+      author: Ruslan
       changes:
           - loadData:
                 columns:
@@ -140,8 +140,8 @@ databaseChangeLog:
                 relativeToChangelogFile: true
                 tableName: products
 - changeSet:
-      id: 1636564744548-7
-      author: Ruslan (generated)
+      id: create_table_customer
+      author: Ruslan
       changes:
           - createTable:
                 columns:
@@ -158,8 +158,8 @@ databaseChangeLog:
                           type: VARCHAR(30)
                 tableName: customer
 - changeSet:
-      id: 1636564744548-8
-      author: Ruslan (generated)
+      id: loadData_customer
+      author: Ruslan
       changes:
           - loadData:
                 columns:
@@ -175,8 +175,8 @@ databaseChangeLog:
                 relativeToChangelogFile: true
                 tableName: customer
 - changeSet:
-      id: 1636564744548-9
-      author: Ruslan (generated)
+      id: addForeignKey_orders
+      author: Ruslan
       changes:
           - addForeignKeyConstraint:
                 baseColumnNames: order_id
@@ -190,8 +190,8 @@ databaseChangeLog:
                 referencedTableName: orders
                 validate: true
 - changeSet:
-      id: 1636564744548-10
-      author: Ruslan (generated)
+      id: addForeignKey_customer
+      author: Ruslan
       changes:
           - addForeignKeyConstraint:
                 baseColumnNames: customer_id
@@ -205,8 +205,8 @@ databaseChangeLog:
                 referencedTableName: customer
                 validate: true
 - changeSet:
-      id: 1636564744548-11
-      author: Ruslan (generated)
+      id: addForeignKey_products
+      author: Ruslan
       changes:
           - addForeignKeyConstraint:
                 baseColumnNames: products_id

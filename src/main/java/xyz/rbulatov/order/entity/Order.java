@@ -13,18 +13,20 @@ import java.util.List;
 @Data
 @Schema(description = "Сущность заказов")
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+
     @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
     @Column(name = "datetime")
     @CreationTimestamp
     private Timestamp datetime;
+
     @ManyToMany
     @JoinTable(
             name = "order_to_product",

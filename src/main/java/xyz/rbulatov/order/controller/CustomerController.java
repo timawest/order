@@ -1,8 +1,9 @@
-package xyz.rbulatov.order.controllers;
+package xyz.rbulatov.order.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 @Slf4j
-@Tag(name="Пользователи", description="Управление пользователями")
+@Api("Контроллер по работе с пользователями")
 public class CustomerController {
-
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
 
@@ -39,14 +39,11 @@ public class CustomerController {
             description = "Позволяет найти пользователя по ID"
     )
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable @Parameter(description = "Идентификатор пользователя") Long id) {
-        return ResponseEntity.ok(customerMapper.toCustomerDTO(customerService.getCustomerById(id).get()));
+        return ResponseEntity.ok(customerMapper.toCustomerDTO(customerService.getCustomerById(id).orElse(null)));
     }
 
     @PostMapping("/add")
-    @Operation(
-            summary = "Создать",
-            description = "Позволяет зарегистрировать пользователя"
-    )
+    @ApiOperation(value = "Запрос регистрации нового пользователя")
     public ResponseEntity<CustomerDTO> create(@RequestBody CustomerDTO customerDTO) {
         customerService.create(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();

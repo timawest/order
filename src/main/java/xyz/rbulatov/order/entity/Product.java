@@ -11,18 +11,21 @@ import java.util.List;
 @Data
 @Schema(description = "Сущность товары")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "price")
     private int price;
+
     @ManyToMany
     @JoinTable(
             name = "order_to_product",
