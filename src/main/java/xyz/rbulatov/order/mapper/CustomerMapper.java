@@ -6,9 +6,7 @@ import xyz.rbulatov.order.entity.Customer;
 
 import java.util.List;
 
-@Mapper(
-        componentModel = "spring"
-)
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
     CustomerDTO toCustomerDTO(Customer customer);
     List<CustomerDTO> toCustomerDTOs(List<Customer> customers);

@@ -1,0 +1,1 @@
+Сваггер доступен по ссылке - http://localhost:8080/swagger-ui/
